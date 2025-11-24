@@ -13,7 +13,7 @@ function desired_ax = longitudinal_speed_pi_controller_driving_m(ego_status, dri
         error_sum = error_sum + error * dt;
     end
 
-    Kp = 0.7;
+    Kp = 0.6;
     Ki = 0.005;
 
     P_term = Kp*error;

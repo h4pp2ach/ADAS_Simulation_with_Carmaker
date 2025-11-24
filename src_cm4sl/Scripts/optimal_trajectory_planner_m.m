@@ -18,7 +18,7 @@ function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_plan
     laneWidth = 3.5;
     dList = [-laneWidth, 0.0, laneWidth];
     vCandidates = [targetSpeed, targetSpeed*0.5, targetSpeed*0.3];
-    TimeList = 1.5:0.2:3.5;
+    TimeList = 1.5:0.3:3.5;
     N_pts = 30;
 
     if mission_state == 3
@@ -77,7 +77,7 @@ function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_plan
     if isempty(costs)
         x_traj = zeros(N_pts, 1);
         y_traj = zeros(N_pts, 1);
-        V_ref = single(7/3.6);
+        V_ref = single(4.5/3.6);
         driving_mission_info_out.is_Optimal_Path = uint8(0);
         % disp("no optimal path")
     else
@@ -255,7 +255,7 @@ function valid = checkConstraints(s_traj, d_traj, s_dot, d_dot, s_ddot, d_ddot, 
     V_MAX     = 80.0/3.6;
     A_MAX     = 20.0;
     KAPPA_MAX = 2.0;
-    COLL_DIST = 3.2;
+    COLL_DIST = 3.25;
     
     if mission_state == 2 && (abs(d_traj(end) - dList(tollgate_num)) > epsilon)
         valid = false;
@@ -310,8 +310,8 @@ function cost = computeCost(s_jerk, d_jerk, T, di, sf_dot, df, TARGET_SPEED)
     K_LON = 1.5;
     
     K_avoid_center = 10000.0;
-    K_firstLane = 0.5;
-    K_thridLane = 0.0;
+    K_firstLane = 0.0;
+    K_thridLane = 0.5;
     
     
     J_lat = sum(d_jerk.^2);

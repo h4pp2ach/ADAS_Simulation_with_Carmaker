@@ -16,7 +16,7 @@ function driving_mission_info_out = set_velocity_ref_m(ego_status, driving_missi
     if lane_section_idx == 1
         target_velocity = single(50/3.6);
     elseif lane_section_idx == 3 || lane_section_idx == 6
-        target_velocity = single(45/3.6);
+        target_velocity = single(40/3.6);
     elseif lane_section_idx == 4
         target_velocity = single(50/3.6);
     elseif lane_section_idx == 5
