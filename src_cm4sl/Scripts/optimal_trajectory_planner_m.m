@@ -18,7 +18,7 @@ function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_plan
     laneWidth = 3.5;
     dList = [-laneWidth, 0.0, laneWidth];
     vCandidates = [targetSpeed, targetSpeed*0.5, targetSpeed*0.3];
-    TimeList = 1.5:0.3:3.5;
+    TimeList = 1.5:0.2:3.5;
     N_pts = 30;
 
     if mission_state == 3

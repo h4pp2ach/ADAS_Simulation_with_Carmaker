@@ -199,7 +199,7 @@ function path = hybridAstar_planner_m(parking_mission_info, obstacles, param)
     cached_len = uint16(k);
     initialized = true;
 
-    % visualize_hybridAstar_internal(path, obstacles, [start_X start_Y], [goal_X goal_Y], p);
+    visualize_hybridAstar_internal(path, obstacles, [start_X start_Y], [goal_X goal_Y], p);
 end
 
 
