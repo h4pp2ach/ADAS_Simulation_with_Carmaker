@@ -103,7 +103,7 @@ end
 
 function [y_LAD, LAD] = compute_lateral(poly_coeff)
 
-    x_lookahead = 2.9 + 0.6;
+    x_lookahead = 2.9 + 0.5;
     degree = length(poly_coeff) - 1;
 
     y_ref = single(0.0);

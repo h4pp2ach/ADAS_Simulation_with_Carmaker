@@ -10,7 +10,7 @@ function delta  = lateral_PP_controller_parking_m(parking_mission_info, ego_stat
         return
     end
 
-    delta = 0.9*atan( 2 * L * y_LAD / (LAD^2) );
+    delta = 1.0*atan( 2 * L * y_LAD / (LAD^2) );
     % if parking_mission_info.dir < 0
     %     delta = -delta;
     % end
@@ -18,4 +18,5 @@ function delta  = lateral_PP_controller_parking_m(parking_mission_info, ego_stat
     % disp('---PP Node---')
     % disp(LAD)
     % disp(y_LAD)
+end
     

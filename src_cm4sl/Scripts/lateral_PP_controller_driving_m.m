@@ -11,7 +11,7 @@ function delta  = lateral_PP_controller_driving_m(current_lane_info)
         return
     end
 
-    delta = 1.08*atan( 2 * L * y_LAD / (LAD^2) );
+    delta = 1.07*atan( 2 * L * y_LAD / (LAD^2) );
 
     % disp('---PP Node---')
     % disp(LAD)

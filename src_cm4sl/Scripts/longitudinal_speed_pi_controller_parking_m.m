@@ -7,10 +7,10 @@ function desired_ax = longitudinal_speed_pi_controller_parking_m(ego_status, par
     isclear = parking_mission_info.parking_clear;
     isPathFound = parking_mission_info.isPathFound;
 
-    disp('---------------')
-    disp(isPathFound)
-    disp(ego_status.ego_X)
-    disp(ego_status.ego_Y)
+    % disp('---------------')
+    % disp(isPathFound)
+    % disp(ego_status.ego_X)
+    % disp(ego_status.ego_Y)
 
     if isclear == 1 || isPathFound == 0
         target_velocity = -5/3.6;

@@ -3,7 +3,7 @@ function current_lane_info_out = compute_lateral_info_m(current_lane_info_in, eg
     current_lane_info_out = current_lane_info_in;
     poly_coeff = current_lane_info_in.lane_Coeff;
 
-    lookahead_time = 1.6;
+    lookahead_time = 1.3;
     velocity = ego_status.ego_Speed;
     x_lookahead = velocity * lookahead_time;
     degree = length(poly_coeff) - 1;

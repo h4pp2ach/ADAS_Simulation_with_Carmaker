@@ -14,24 +14,24 @@ function driving_mission_info_out = set_velocity_ref_m(ego_status, driving_missi
     end
 
     if lane_section_idx == 1
-        target_velocity = single(45/3.6);
-    elseif lane_section_idx == 3 || lane_section_idx == 6
-        target_velocity = single(40/3.6);
-    elseif lane_section_idx == 4
-        target_velocity = single(45/3.6);
-    elseif lane_section_idx == 5
         target_velocity = single(50/3.6);
-    elseif lane_section_idx == 7
+    elseif lane_section_idx == 3 || lane_section_idx == 6
         target_velocity = single(45/3.6);
+    elseif lane_section_idx == 4
+        target_velocity = single(50/3.6);
+    elseif lane_section_idx == 5
+        target_velocity = single(45/3.6);
+    elseif lane_section_idx == 7
+        target_velocity = single(50/3.6);
     
     % 직선도로
     elseif lane_section_idx == 8
-        target_velocity = single(50/3.6);
+        target_velocity = single(60/3.6);
     end
 
     
     if mission_state == 2
-        target_velocity = single(30/3.6);
+        target_velocity = single(45/3.6);
 
     elseif mission_state == 3
         target_velocity = single(20/3.6);
