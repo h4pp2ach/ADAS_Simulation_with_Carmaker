@@ -8,36 +8,40 @@ function driving_mission_info_out = set_velocity_ref_m(ego_status, driving_missi
     ego_Y = ego_status.ego_Y;
 
     lane_section_idx = get_lane_section_idx(ego_X, ego_Y);
+    
+    ay_max = 8;
 
     if lane_section_idx == 0
         mission_state = uint8(4);
     end
 
     if lane_section_idx == 1
-        target_velocity = single(50/3.6);
-    elseif lane_section_idx == 3 || lane_section_idx == 6
-        target_velocity = single(40/3.6);
-    elseif lane_section_idx == 4
-        target_velocity = single(50/3.6);
+        target_velocity = single(sqrt(ay_max/0.008));
+    elseif lane_section_idx == 2
+        target_velocity = single(sqrt(ay_max/0.013));
+    elseif lane_section_idx == 3 || lane_section_idx == 4
+        target_velocity = single(sqrt(ay_max/0.015));
     elseif lane_section_idx == 5
-        target_velocity = single(45/3.6);
+        target_velocity = single(80/3.6);
+    elseif lane_section_idx == 6
+        target_velocity = single(sqrt(ay_max/0.039));
     elseif lane_section_idx == 7
-        target_velocity = single(50/3.6);
+        target_velocity = single(sqrt(ay_max/0.02));
     
     % 직선도로
     elseif lane_section_idx == 8
-        target_velocity = single(60/3.6);
+        target_velocity = single(80/3.6);
     end
 
     
     if mission_state == 2
-        target_velocity = single(45/3.6);
+        target_velocity = single(50/3.6);
 
     elseif mission_state == 3
-        target_velocity = single(20/3.6);
+        target_velocity = single(30/3.6);
 
         if lane_section_idx == 9
-            target_velocity = single(8/3.6);
+            target_velocity = single(15/3.6);
         end
 
     elseif mission_state == 4
