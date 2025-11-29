@@ -15,7 +15,7 @@ function adj = get_adj_obstacles_info_m(ego_status, obstacles_info, driving_miss
         return;
     end
     
-    dist_threshhold = 30.0;
+    dist_threshhold = 50.0;
     
     ego_x = ego_status.ego_X;
     ego_y = ego_status.ego_Y;

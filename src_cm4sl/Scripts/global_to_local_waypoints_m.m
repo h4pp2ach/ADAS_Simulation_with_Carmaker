@@ -1,6 +1,6 @@
 function local_waypoints_ = global_to_local_waypoints_m(waypointList, current_lane_info, ego_status)
 
-    num_waypoint = 15;
+    num_waypoint = 30;
     vehicle_position = [ego_status.ego_X, ego_status.ego_Y];
     head = ego_status.ego_YAW;
 

@@ -1,4 +1,4 @@
-function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_planner_m(MapData_Info, ego_status, otherVehicles, driving_mission_info_in)
+    function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_planner_m(MapData_Info, ego_status, otherVehicles, driving_mission_info_in)
     % centerLine: [X, Y]
     % egoState: [x, y, yaw, v, a]
     % otherVehicles: [X, Y, Vx, Vy, Ax, Ay, Yaw, Yawrate]
@@ -17,14 +17,14 @@ function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_plan
 
     laneWidth = 3.5;
     dList = [-laneWidth, 0.0, laneWidth];
-    vCandidates = [targetSpeed, targetSpeed*0.5, targetSpeed*0.3];
-    TimeList = 1.5:0.3:3.5;
+    vCandidates = [targetSpeed, targetSpeed*0.5, targetSpeed*0.35];
+    TimeList = 1.0:0.2:3.0;
     N_pts = 30;
 
     if mission_state == 3
         centerLine = MapData_Info.Route_Parking;
         dList = 0.0;
-        TimeList = 1.0:0.5:2.0;
+        TimeList = 1.0:0.3:2.0;
     end
 
     if mission_state == 4
@@ -39,8 +39,6 @@ function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_plan
     si_ddot = a * cos(yaw - yaw_ref);
     di_dot = v * sin(yaw - yaw_ref);
     di_ddot = a * sin(yaw - yaw_ref);
-
-    sf_dot = targetSpeed;
     
     trajSet = {};
     costs = [];
@@ -77,7 +75,7 @@ function [global_waypoints, driving_mission_info_out]  = optimal_trajectory_plan
     if isempty(costs)
         x_traj = zeros(N_pts, 1);
         y_traj = zeros(N_pts, 1);
-        V_ref = single(5/3.6);
+        V_ref = single(15/3.6);
         driving_mission_info_out.is_Optimal_Path = uint8(0);
         % disp("no optimal path")
     else
@@ -249,7 +247,7 @@ function valid = checkConstraints(s_traj, d_traj, s_dot, d_dot, s_ddot, d_ddot, 
     % 차선 조건
     laneWidth = 3.5;
     dList = [laneWidth, 0.0, -laneWidth];
-    epsilon = 0.5;
+    epsilon = 0.3;
     
     % 제약조건
     V_MAX     = 80.0/3.6;
@@ -291,8 +289,8 @@ function valid = checkConstraints(s_traj, d_traj, s_dot, d_dot, s_ddot, d_ddot, 
     ego_yaw_traj = atan2(dy, dx);   % N_pts x 1
     
     % 차량 직사각형 크기 (공통)
-    car_length = 4.5;    % [m]
-    car_width  = 2.0;    % [m]
+    car_length = 4.5 + 0.8;    % [m]
+    car_width  = 2.0 + 0.6;    % [m]
 
     for i = 1:size(otherVehicles,1)
         obs_X_init = otherVehicles(i,1);
@@ -338,7 +336,6 @@ function valid = checkConstraints(s_traj, d_traj, s_dot, d_dot, s_ddot, d_ddot, 
             psi_e = ego_yaw_traj(j);
             psi_o = obs_yaw(j);
 
-            % SAT 기반 OBB vs OBB 충돌 체크
             isCollide = obbCollisionSAT(Ce, psi_e, Co, psi_o, car_length, car_width);
 
             if isCollide
@@ -365,11 +362,11 @@ function cost = computeCost(s_jerk, d_jerk, T, di, sf_dot, df, TARGET_SPEED)
     K_J = 0.1;
     K_T = 1.0;
     K_D = 0.1;
-    K_V = 3.0;
+    K_V = 10.0;
     K_LAT = 1.0;
     K_LON = 1.5;
     
-    K_avoid_center = 10000.0;
+    K_avoid_center = 0.1;
     K_firstLane = 0.0;
     K_thridLane = 0.0;
     
@@ -445,7 +442,7 @@ function isCollide = obbCollisionSAT(Ce, psi_e, Co, psi_o, car_length, car_width
     % psi_e: ego yaw [rad]
     % Co   : obs center [2x1]
     % psi_o: obs yaw [rad]
-    % car_length, car_width : 공통 크기 (둘 다 동일하다고 가정)
+    % car_length, car_width
 
     hx_e = car_length/2;
     hy_e = car_width /2;

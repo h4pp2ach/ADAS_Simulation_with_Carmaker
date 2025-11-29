@@ -5,17 +5,28 @@ function parking_mission_info_out  = global_to_local_path_manager_m(mission_stat
     if mission_state ~= 4
         return;
     end
-
+    
     goalX = parking_mission_info_in.parkingDestinationPos_X;
     goalY = parking_mission_info_in.parkingDestinationPos_Y;
     ego_X = ego_status.ego_X;
     ego_Y = ego_status.ego_Y;
-
+    
     dx_goal = ego_X - goalX;
     dy_goal = ego_Y - goalY;
-    dist_goal = sqrt(dx_goal^2 + dy_goal^2);
+    dist_goal = dx_goal^2 + dy_goal^2;
+    
+    x_region = [-3, 3.5, 3.5, -3];
+    y_region = [-40, -40, -28, -28];
+    
+    isInside = inpolygon(ego_X, ego_Y, x_region, y_region);
+    
+    if isInside
+        parking_mission_info_out.velReference = single(5.0 / 3.6);
+    else
+        parking_mission_info_out.velReference = single(17.0 / 3.6);
+    end
 
-    if dist_goal < 1.0
+    if dist_goal < 3.0^2
         parking_mission_info_out.parking_clear = uint8(1);
         parking_mission_info_out.LAD = single(0.01);
         parking_mission_info_out.y_LAD = single(0.0);
@@ -72,7 +83,6 @@ function parking_mission_info_out  = global_to_local_path_manager_m(mission_stat
 
     poly_coeff  = fit_polynomial_to_waypoints_mfile(local_waypoints_);
     [y_LAD, LAD] = compute_lateral(poly_coeff);
-    dir = int8(waypoints(idx_start,4));
 
     % disp(size(waypoints(:,1)))
     % disp(idx_start)
@@ -80,7 +90,6 @@ function parking_mission_info_out  = global_to_local_path_manager_m(mission_stat
     
     parking_mission_info_out.LAD = LAD;
     parking_mission_info_out.y_LAD = y_LAD;
-    parking_mission_info_out.dir = dir;
 
 end
 

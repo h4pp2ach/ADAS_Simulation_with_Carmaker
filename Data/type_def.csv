@@ -19,7 +19,7 @@ busParkingMissionInfo,parkingMapBoundary_Y_Min,numeric,single,1,-1000,1000,0,Par
 busParkingMissionInfo,parkingMapBoundary_Y_Max,numeric,single,1,-1000,1000,0,Parking map boundary Y MAX
 busParkingMissionInfo,isPathFound,numeric,uint8,1,0,255,0,whether the optimal parking path has been generated
 busParkingMissionInfo,parking_clear,numeric,uint8,1,0,255,0,Whether Parking is complete
-busParkingMissionInfo,dir,numeric,int8,1,-1,1,0,Forward: 1 Reverse: -1
+busParkingMissionInfo,velReference,numeric,single,1,-1000,1000,0,Velocity Reference
 busParkingMissionInfo,LAD,numeric,single,1,0,100,0,Look ahead distance
 busParkingMissionInfo,y_LAD,numeric,single,1,0,100,0,Lateral offset when x is Look ahead distance
 
